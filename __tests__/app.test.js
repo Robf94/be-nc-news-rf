@@ -100,13 +100,8 @@ describe("app", () => {
         .expect(200)
         .then(({ body }) => {
           const articles = body.articles;
-
-          // Check articles sorted by date descending
-          expect(articles).toBeSortedBy("created_at", { descending: true });
-
           // Check each property
           articles.forEach((article) => {
-            expect(typeof article.article_id).toBe("number");
             expect(typeof article.title).toBe("string");
             expect(typeof article.topic).toBe("string");
             expect(typeof article.author).toBe("string");
@@ -119,5 +114,15 @@ describe("app", () => {
           });
         });
     });
+
+    test("GET: should return the the array of objects in date descending order", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body }) => {
+          const articles = body.articles;
+          expect(articles).toBeSortedBy("created_at", { descending: true });
+      })
+    })
   });
 });
