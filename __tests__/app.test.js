@@ -93,7 +93,7 @@ describe("app", () => {
     });
   });
 
-  describe.only("/api/articles", () => {
+  describe("/api/articles", () => {
     test("GET: 200 - should respond with an array of article objects with the relevant properties, including comment_count, sorted by date", () => {
       return request(app)
         .get("/api/articles")
