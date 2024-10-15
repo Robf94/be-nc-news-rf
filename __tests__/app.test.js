@@ -33,6 +33,15 @@ describe("app", () => {
           });
         });
     });
+
+    test("GET: 200 - should respond with the correct length of the topic data", () => {
+      return request(app)
+        .get("/api/topics")
+        .expect(200)
+        .then((res) => {
+          expect(res.body.topics).toHaveLength(3);
+        });
+    });
   });
 
   describe("/api", () => {
@@ -42,6 +51,7 @@ describe("app", () => {
         .expect(200)
         .then(({ body }) => {
           expect(body.endpoints).toEqual(endpoints);
+          expect(typeof body.endpoints["GET /api/articles"].description).toBe("string");
         });
     });
   });
