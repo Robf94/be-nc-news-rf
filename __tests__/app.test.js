@@ -61,7 +61,7 @@ describe("app", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
-        .then(({body}) => {
+        .then(({ body }) => {
           const article = body.article;
           console.log(article);
           expect(typeof article.article_id).toBe("number");
@@ -75,7 +75,24 @@ describe("app", () => {
         });
       // Note - .get(api/articles/1) sets the article to test against, as long as the article_id exists in the test data
     });
+    // valid id but does not exist
+    // invalid id
+    test("GET: 404 - should return appropriate status and message if received a valid id that does not exist", () => {
+      return request(app)
+        .get("/api/articles/999")
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).toBe("Not Found");
+        });
+    });
 
-    test()
+    test("GET: 400 - should return appropriate status and message if received an invalid id", () => {
+      return request(app)
+        .get("/api/articles/not-a-number")
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).toBe("Bad Request");
+        });
+    });
   });
 });

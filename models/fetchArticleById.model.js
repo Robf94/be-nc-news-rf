@@ -8,10 +8,10 @@ function fetchArticlesById(article_id_model_arg) {
       [article_id_model_arg]
     )
     .then(({ rows }) => {
+      if (rows.length === 0) {
+        return Promise.reject({ status: 404, msg: "Not Found" });
+      }
       return rows[0];
-    })
-    .catch((err) => {
-      return err;
     });
 }
 

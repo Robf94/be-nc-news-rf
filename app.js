@@ -20,4 +20,18 @@ app.use("/", (req, res) => {
 
 // Error handlers
 
+// 404 Not Found
+app.use((err, req, res, next) => {
+  if (err.status && err.msg) {
+    res.status(err.status).send({ msg: err.msg });
+  }
+  next(err);
+});
+
+// 400 Bad Request
+app.use((err, req, res, next) => {
+  if (err.code === "22P02") {
+    res.status(400).send({msg: "Bad Request"})
+  }
+})
 module.exports = app;
