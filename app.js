@@ -4,6 +4,8 @@ const getTopics = require("./controllers/getTopics.controller.js");
 const getEndpoints = require("./controllers/getEndpoints.controller.js");
 const getArticleById = require("./controllers/getArticleById.controller.js");
 const getAllArticlesWithComments = require("./controllers/getAllArticlesWithComments.controller.js");
+const getOneArticleWithComments = require("./controllers/getOneArticleWithComments.model.js");
+
 const { notFound, customError, badRequest, internalServerError } = require("./middleware/errorHandlers.js");
 
 // Endpoints
@@ -15,6 +17,8 @@ app.get("/api", getEndpoints);
 app.get("/api/articles/:article_id", getArticleById);
 // Get all articles
 app.get("/api/articles", getAllArticlesWithComments);
+// Get article comments
+app.get("/api/articles/:article_id/comments", getOneArticleWithComments);
 
 // Error handlers
 // 404

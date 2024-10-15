@@ -115,14 +115,29 @@ describe("app", () => {
         });
     });
 
-    test("GET: should return the the array of objects in date descending order", () => {
+    test("GET: 200 -should return the the array of objects in date descending order", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(({ body }) => {
           const articles = body.articles;
           expect(articles).toBeSortedBy("created_at", { descending: true });
-      })
-    })
+        });
+    });
+  });
+
+  describe("/api/articles/:article_id/comments", () => {
+    test("GET: 200 -should respond with an array of comments for a given article_id with the relevant properties", () => {});
+
+    test("GET: 200 - should respond with an array of comments for a given article_id, arranged with most recent comments first", () => {});
+
+    test("GET: 404 - should return appropriate status and message if received a valid id that does not exist", () => {
+      return request(app)
+        .get("/api/articles/999")
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).toBe("Not Found");
+        });
+    });
   });
 });
