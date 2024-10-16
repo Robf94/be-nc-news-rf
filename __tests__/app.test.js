@@ -126,7 +126,7 @@ describe("app", () => {
     });
   });
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     test("GET: 200 -should respond with an array of comments for a given article_id with the relevant properties", () => {
       return request(app)
         .get("/api/articles/1/comments")
@@ -170,6 +170,46 @@ describe("app", () => {
         .expect(400)
         .then((res) => {
           expect(res.body.msg).toBe("Bad Request");
+        });
+    });
+
+    test("POST: 201 - should add a comment to the relevant article_id", () => {
+      const newComment = {
+        body: "I am a comment!",
+        article_id: 1,
+        author: "butter_bridge",
+        votes: 0,
+        created_at: new Date(),
+      };
+      return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(201)
+        .then(({ body }) => {
+          const comment = body.comment;
+          expect(typeof comment.comment_id).toBe("number");
+          expect(typeof comment.body).toBe("string");
+          expect(comment.article_id).toBe(1);
+          expect(typeof comment.author).toBe("string");
+          expect(comment.votes).toBe(0);
+          expect(typeof comment.created_at).toBe("string");
+        });
+    });
+
+    test("POST: 400 - should return with appropriate error when comment is blank", () => {
+      const newComment = {
+        body: null,
+        article_id: 1,
+        author: "butter_bridge",
+        votes: 0,
+        created_at: new Date(),
+      };
+      return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).toBe("Comment body cannot be blank!");
         });
     });
   });
