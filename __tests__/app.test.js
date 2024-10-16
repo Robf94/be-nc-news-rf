@@ -127,7 +127,7 @@ describe("app", () => {
   });
 
   describe("/api/articles/:article_id/comments", () => {
-    test("GET: 200 -should respond with an array of comments for a given article_id with the relevant properties", () => {
+    test("GET: 200 - should respond with an array of comments for a given article_id with the relevant properties", () => {
       return request(app)
         .get("/api/articles/1/comments")
         .expect(200)
@@ -296,6 +296,31 @@ describe("app", () => {
         .expect(400)
         .then((response) => {
           expect(response.body.msg).toBe("Bad request");
+        });
+    });
+  });
+
+  describe("GET /api/users", () => {
+    test("GET: 200 - should respond with an array of user objects each containing username, name, and avatar_url", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then(({ body }) => {
+          body.users.forEach((user) => {
+            expect(user).toHaveProperty("username", "name", "avatar_url");
+
+            expect(typeof user.username).toBe("string");
+            expect(typeof user.name).toBe("string");
+            expect(typeof user.avatar_url).toBe("string");
+          });
+        });
+    });
+    test("GET: 404 - should respond with the relevant status when when mis-typing endpoint", () => {
+      return request(app)
+        .get("/api/userz")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Not Found");
         });
     });
   });

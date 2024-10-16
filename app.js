@@ -16,6 +16,8 @@ app.get("/api/articles/:article_id", controllers.getArticleById);
 app.get("/api/articles", controllers.getAllArticlesWithComments);
 // Get article comments
 app.get("/api/articles/:article_id/comments", controllers.getOneArticleWithComments);
+// Get users
+app.get("/api/users", controllers.getAllUsers)
 
 // POST
 app.use(express.json());
