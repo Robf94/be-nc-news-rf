@@ -55,5 +55,16 @@
       "votes": 14,
       "created_at": "2020-10-04T01:03:00.000Z"
     }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "allows client to post a new comment to a specific article, returns bad request if body left blank",
+    "exampleResponse": {
+      "comment_id": 19,
+      "body": "I am a comment!",
+      "article_id": 1,
+      "author": "butter_bridge",
+      "votes": 0,
+      "created_at": "2024-10-16T12:18:39.334Z"
+    }
   }
 }

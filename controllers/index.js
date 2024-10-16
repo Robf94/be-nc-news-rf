@@ -4,4 +4,6 @@ const getArticleById = require("./getArticleById.controller.js");
 const getAllArticlesWithComments = require("./getAllArticlesWithComments.controller.js");
 const getOneArticleWithComments = require("./getOneArticleWithComments.controller.js");
 
-module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments };
+const postComment = require("./postComment.controller.js");
+
+module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment };
