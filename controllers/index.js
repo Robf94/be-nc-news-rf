@@ -6,4 +6,6 @@ const getOneArticleWithComments = require("./getOneArticleWithComments.controlle
 
 const postComment = require("./postComment.controller.js");
 
-module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment };
+const patchArticle = require("./patchArticle.controller.js");
+
+module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment, patchArticle };

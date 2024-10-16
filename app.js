@@ -22,6 +22,10 @@ app.use(express.json());
 // Post comments
 app.post("/api/articles/:article_id/comments", controllers.postComment);
 
+// PATCH
+// Update article by article_id
+app.patch("/api/articles/:article_id", controllers.patchArticle);
+
 // Error handlers
 // 404
 app.use(notFound);

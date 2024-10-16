@@ -209,7 +209,70 @@ describe("app", () => {
         .send(newComment)
         .expect(400)
         .then((res) => {
-          expect(res.body.msg).toBe("Comment body cannot be blank!");
+          expect(res.body.msg).toBe("Body cannot be blank!");
+        });
+    });
+  });
+
+  describe("PATCH /api/articles/:article_id", () => {
+    test("PATCH: 200 - should INCREASE votes on an article depending on the amount of votes defined in newVote and responds with the updated article", () => {
+      const newVote = 5;
+      const updateArticle = {
+        inc_votes: newVote,
+      };
+      return request(app)
+        .patch("/api/articles/1")
+        .send(updateArticle)
+        .expect(200)
+        .then(({ body }) => {
+          const article = body.article;
+          expect(article).toHaveProperty("article_id");
+          expect(article).toHaveProperty("title");
+          expect(article).toHaveProperty("topic");
+          expect(article).toHaveProperty("author");
+          expect(article).toHaveProperty("body");
+          expect(article).toHaveProperty("created_at");
+          expect(article).toHaveProperty("votes");
+          expect(article).toHaveProperty("article_img_url");
+          expect(article.votes).toEqual(105);
+        });
+    });
+    test("PATCH: 200 - should DECREASE votes on an article depending on the amount of votes defined in newVote and responds with the updated article", () => {
+      const newVote = -100;
+      const updateArticle = {
+        inc_votes: newVote,
+      };
+      return request(app)
+        .patch("/api/articles/1")
+        .send(updateArticle)
+        .expect(200)
+        .then(({ body }) => {
+          const article = body.article;
+          expect(article.votes).toEqual(0);
+        });
+    });
+    test("PATCH: 400 - should respond with the relevant error message if incorrect data type", () => {
+      const newVote = "not a number";
+      const updateArticle = {
+        inc_votes: newVote,
+      };
+      return request(app)
+        .patch("/api/articles/1")
+        .send(updateArticle)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).toBe("Bad Request");
+        });
+    });
+
+    test("PATCH: 400 - should respond with the relevant error message if body is empty", () => {
+      const updateArticle = {};
+      return request(app)
+        .patch("/api/articles/1")
+        .send(updateArticle)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).toBe("Body cannot be blank!");
         });
     });
   });

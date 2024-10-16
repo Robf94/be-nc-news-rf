@@ -30,7 +30,7 @@ const psqlColNotFound = (err, req, res, next) => {
 // Not null violation
 const notNullViolation = (err, req, res, next) => {
   if (err.code === "23502") {
-    res.status(400).send({ msg: "Comment body cannot be blank!" });
+    res.status(400).send({ msg: "Body cannot be blank!" });
   }
   next(err);
 };
