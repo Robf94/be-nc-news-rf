@@ -187,7 +187,6 @@ describe("app", () => {
         .expect(201)
         .then(({ body }) => {
           const comment = body.comment;
-          console.log(comment);
           expect(typeof comment.comment_id).toBe("number");
           expect(typeof comment.body).toBe("string");
           expect(comment.article_id).toBe(1);
