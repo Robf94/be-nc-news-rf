@@ -26,6 +26,10 @@ app.post("/api/articles/:article_id/comments", controllers.postComment);
 // Update article by article_id
 app.patch("/api/articles/:article_id", controllers.patchArticle);
 
+// DELETE
+// Delete comment by comment_id
+app.delete("/api/comments/:comment_id", controllers.deleteCommentById);
+
 // Error handlers
 // 404
 app.use(notFound);
@@ -33,7 +37,7 @@ app.use(notFound);
 app.use(customError);
 // Bad request
 app.use(badRequest);
-// PSQL col not mfound
+// PSQL col not found
 app.use(psqlColNotFound);
 // Not null violation
 app.use(notNullViolation);

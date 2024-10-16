@@ -8,4 +8,6 @@ const postComment = require("./postComment.controller.js");
 
 const patchArticle = require("./patchArticle.controller.js");
 
-module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment, patchArticle };
+const deleteCommentById = require("./deleteCommentById.controller.js");
+
+module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment, patchArticle, deleteCommentById };
