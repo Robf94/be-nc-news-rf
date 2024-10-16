@@ -1,13 +1,28 @@
+// Import GET controllers
 const getTopics = require("./getTopics.controller.js");
 const getEndpoints = require("./getEndpoints.controller.js");
 const getArticleById = require("./getArticleById.controller.js");
 const getAllArticlesWithComments = require("./getAllArticlesWithComments.controller.js");
 const getOneArticleWithComments = require("./getOneArticleWithComments.controller.js");
+const getAllUsers = require("./getAllUsers.controller.js");
 
+// Import POST controllers
 const postComment = require("./postComment.controller.js");
 
+// Import PATCH controllers
 const patchArticle = require("./patchArticle.controller.js");
 
+// Import DELETE controllers
 const deleteCommentById = require("./deleteCommentById.controller.js");
 
-module.exports = { getTopics, getEndpoints, getArticleById, getAllArticlesWithComments, getOneArticleWithComments, postComment, patchArticle, deleteCommentById };
+module.exports = {
+  getTopics,
+  getEndpoints,
+  getArticleById,
+  getAllArticlesWithComments,
+  getOneArticleWithComments,
+  getAllUsers,
+  postComment,
+  patchArticle,
+  deleteCommentById,
+};
