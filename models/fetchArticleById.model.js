@@ -11,6 +11,7 @@ function fetchArticlesById(article_id_model_arg) {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "Not Found" });
       }
+      // I have already made a 404 error handler middleware function, passing the status and msg seems like i am repeating myself - how do i refactor?
       return rows[0];
     });
 }

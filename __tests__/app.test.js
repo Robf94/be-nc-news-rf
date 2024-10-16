@@ -93,7 +93,7 @@ describe("app", () => {
     });
   });
 
-  describe.only("/api/articles", () => {
+  describe("/api/articles", () => {
     test("GET: 200 - should respond with an array of article objects with the relevant properties, including comment_count, sorted by date", () => {
       return request(app)
         .get("/api/articles")
@@ -115,14 +115,62 @@ describe("app", () => {
         });
     });
 
-    test("GET: should return the the array of objects in date descending order", () => {
+    test("GET: 200 -should return the the array of objects in date descending order", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(({ body }) => {
           const articles = body.articles;
           expect(articles).toBeSortedBy("created_at", { descending: true });
-      })
-    })
+        });
+    });
+  });
+
+  describe.only("/api/articles/:article_id/comments", () => {
+    test("GET: 200 -should respond with an array of comments for a given article_id with the relevant properties", () => {
+      return request(app)
+        .get("/api/articles/1/comments")
+        .expect(200)
+        .then(({ body }) => {
+          const comments = body.comments;
+          comments.forEach((comment) => {
+            expect(typeof comment.comment_id).toBe("number");
+            expect(typeof comment.body).toBe("string");
+            // Check there are no comments relating to other article_id
+            expect(comment.article_id).toBe(1);
+            expect(typeof comment.author).toBe("string");
+            expect(typeof comment.votes).toBe("number");
+            expect(typeof comment.created_at).toBe("string");
+          });
+        });
+    });
+
+    test("GET: 200 - should respond with an array of comments for a given article_id, arranged with most recent comments first", () => {
+      return request(app)
+        .get("/api/articles/1/comments")
+        .expect(200)
+        .then(({ body }) => {
+          const comments = body.comments;
+          expect(comments).toBeSortedBy("created_at", { descending: true });
+        });
+    });
+
+    test("GET: 404 - should return appropriate status and message if received a valid id that does not exist", () => {
+      return request(app)
+        .get("/api/articles/999")
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).toBe("Not Found");
+        });
+    });
+
+    test("GET: 400 - should return appropriate status and message if received an invalid id", () => {
+      return request(app)
+        .get("/api/articles/not-a-number")
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).toBe("Bad Request");
+        });
+    });
   });
 });

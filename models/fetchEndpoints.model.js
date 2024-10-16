@@ -5,6 +5,7 @@ function fetchEndpoints() {
     const parsedEndpoints = JSON.parse(endpoints);
     return parsedEndpoints;
   });
+  // Do I need to catch any errors here?
 }
 
 module.exports = fetchEndpoints;
