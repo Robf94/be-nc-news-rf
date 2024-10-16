@@ -226,7 +226,6 @@ describe("app", () => {
         .expect(200)
         .then(({ body }) => {
           const article = body.article;
-          console.log(article);
           expect(article).toHaveProperty("article_id");
           expect(article).toHaveProperty("title");
           expect(article).toHaveProperty("topic");
