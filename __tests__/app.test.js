@@ -108,7 +108,7 @@ describe("app", () => {
             expect(typeof article.created_at).toBe("string");
             expect(typeof article.votes).toBe("number");
             expect(typeof article.article_img_url).toBe("string");
-            expect(typeof article.comment_count).toBe("string");
+            expect(typeof article.comment_count).toBe("number");
             // Check body has been removed
             expect(article).not.toHaveProperty("body");
           });
@@ -321,6 +321,37 @@ describe("app", () => {
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).toBe("Not Found");
+        });
+    });
+  });
+
+  describe("GET: 200 - api/articles (sorting queries)", () => {
+    test("should sort articles by comment_count in ascending order", () => {
+      return request(app)
+        .get("/api/articles?sort_by=comment_count&order=ASC")
+        .expect(200)
+        .then(({ body }) => {
+          const articles = body.articles;
+          expect(articles).toBeSortedBy("comment_count", { ascending: true });
+        });
+    });
+    test("GET: 200 - should sort articles by votes in descending order", () => {
+      return request(app)
+        .get("/api/articles?sort_by=votes&order=DESC")
+        .expect(200)
+        .then(({ body }) => {
+          const articles = body.articles;
+          expect(articles).toBeSortedBy("votes", { descending: true });
+        });
+    });
+
+    test("GET: 200 - should return default sorting if invalid sort_by column is entered", () => {
+      return request(app)
+        .get("/api/articles?sort_by=invalid_col&order=DESC")
+        .expect(200)
+        .then(({ body }) => {
+          const articles = body.articles;
+          expect(articles).toBeSortedBy("created_at", { descending: true });
         });
     });
   });
