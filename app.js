@@ -13,11 +13,11 @@ app.get("/api", controllers.getEndpoints);
 // Get articles by article_id
 app.get("/api/articles/:article_id", controllers.getArticleById);
 // Get all articles
-app.get("/api/articles", controllers.getAllArticlesWithComments);
+app.get("/api/articles", controllers.getAllArticles);
 // Get article comments
 app.get("/api/articles/:article_id/comments", controllers.getOneArticleWithComments);
 // Get users
-app.get("/api/users", controllers.getAllUsers)
+app.get("/api/users", controllers.getAllUsers);
 
 // POST
 app.use(express.json());
