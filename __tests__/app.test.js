@@ -325,7 +325,7 @@ describe("app", () => {
     });
   });
 
-  describe("GET: 200 - api/articles (sorting queries)", () => {
+  describe("GET - /api/articles (sorting queries)", () => {
     test("should sort articles by comment_count in ascending order", () => {
       return request(app)
         .get("/api/articles?sort_by=comment_count&order=ASC")
@@ -353,6 +353,36 @@ describe("app", () => {
           const articles = body.articles;
           expect(articles).toBeSortedBy("created_at", { descending: true });
         });
+    });
+    describe("GET - /api/articles?topic= filtering by query", () => {
+      test("GET: 200 - should filter the articles by the topic 'mitch'", () => {
+        return request(app)
+          .get("/api/articles?topic=mitch")
+          .expect(200)
+          .then(({ body }) => {
+            const articles = body.articles;
+            articles.forEach((article) => {
+              expect(article.topic).toBe("mitch");
+            });
+          });
+      });
+      test("GET: 200 - should respond with all articles if topic query is omitted ", () => {
+        return request(app)
+          .get("/api/articles")
+          .expect(200)
+          .then(({ body }) => {
+            const articles = body.articles;
+            expect(articles.length).toBe(13);
+          });
+      });
+      test("GET: 404 - should respond with appropriate status if non-existent topic is requested", () => {
+        return request(app)
+          .get("/api/articles?topic=blahblahblah")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).toBe("Topic Not Found");
+          });
+      });
     });
   });
 });

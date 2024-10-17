@@ -10,7 +10,7 @@
     }
   },
   "GET /api/articles": {
-    "description": "serves an array of all articles in date-descending order, adding comment_count and removing the body. Articles can be sorted by the queries below, in ascending or descending. Defaults to created_at DESC.",
+    "description": "serves an array of all articles in date-descending order, adding comment_count and removing the body. Articles can be sorted by the queries below, in ascending or descending. Defaults to created_at DESC. Can be filtered via topic query.",
     "queries": ["comment_count", "created_at", "article_id", "title", "votes", "author", "topic", "sort_by", "order"],
     "exampleResponse": {
       "articles": [
