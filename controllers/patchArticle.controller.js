@@ -1,4 +1,4 @@
-const updateArticle = require("../models/updateArticle.model");
+const updateArticle = require("../models/updateArticle.model.js");
 
 function patchArticle(req, res, next) {
   const { article_id } = req.params;
