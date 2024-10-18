@@ -5,6 +5,7 @@ const getArticleById = require("./getArticleById.controller.js");
 const getAllArticles = require("./getAllArticles.controller.js");
 const getOneArticleWithComments = require("./getOneArticleWithComments.controller.js");
 const getAllUsers = require("./getAllUsers.controller.js");
+const getUserByUsername = require("./getUserByUsername.controller.js");
 
 // Import POST controllers
 const postComment = require("./postComment.controller.js");
@@ -22,6 +23,7 @@ module.exports = {
   getAllArticles,
   getOneArticleWithComments,
   getAllUsers,
+  getUserByUsername,
   postComment,
   patchArticle,
   deleteCommentById,
