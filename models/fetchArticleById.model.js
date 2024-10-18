@@ -3,15 +3,22 @@ const db = require("../db/connection.js");
 function fetchArticlesById(article_id_model_arg) {
   return db
     .query(
-      `SELECT * FROM articles
-      WHERE article_id = $1`,
+      `
+      SELECT
+        articles.*,
+        COUNT(comments.comment_id) ::INT AS comment_count
+      FROM articles
+      LEFT JOIN comments
+      ON comments.article_id = articles.article_id
+      WHERE articles.article_id = $1
+      GROUP BY articles.article_id
+      `,
       [article_id_model_arg]
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "Not Found" });
       }
-      // I have already made a 404 error handler middleware function, passing the status and msg seems like i am repeating myself - how do i refactor?
       return rows[0];
     });
 }
