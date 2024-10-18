@@ -57,7 +57,7 @@ describe("app", () => {
   });
 
   describe("/api/articles/:article_id", () => {
-    test("GET: 200 - should return an array of article objects with the relevant objects keys and value data types", () => {
+    test("GET: 200 - should return an article object with the relevant objects keys and value data types", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
@@ -322,6 +322,29 @@ describe("app", () => {
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).toBe("Not Found");
+        });
+    });
+  });
+
+  describe("GET /api/users/:username", () => {
+    test("GET: 200 - should respond with an object of the given username", () => {
+      return request(app)
+        .get("/api/users/icellusedkars")
+        .expect(200)
+        .then(({ body }) => {
+          const user = body.user;
+          expect(typeof user.username).toBe("string");
+          expect(typeof user.name).toBe("string");
+          expect(typeof user.avatar_url).toBe("string");
+        });
+    });
+
+    test("GET: 404 - should respond with approprate status when given a valid, but non-existent username", () => {
+      return request(app)
+        .get("/api/users/idontexistyet")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("User does not exist");
         });
     });
   });
