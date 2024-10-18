@@ -178,7 +178,7 @@ describe("app", () => {
       const newComment = {
         body: "I am a comment!",
         article_id: 1,
-        author: "butter_bridge",
+        author: "icellusedkars",
         votes: 0,
         created_at: new Date(),
       };
@@ -201,7 +201,7 @@ describe("app", () => {
       const newComment = {
         body: null,
         article_id: 1,
-        author: "butter_bridge",
+        author: "icellusedkars",
         votes: 0,
         created_at: new Date(),
       };
