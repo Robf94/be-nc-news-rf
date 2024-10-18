@@ -71,6 +71,7 @@ describe("app", () => {
           expect(typeof article.created_at).toBe("string");
           expect(typeof article.votes).toBe("number");
           expect(typeof article.article_img_url).toBe("string");
+          expect(typeof article.comment_count).toBe("number");
         });
       // Note - .get(api/articles/1) sets the article to test against, as long as the article_id exists in the test data
     });
@@ -383,6 +384,18 @@ describe("app", () => {
             expect(body.msg).toBe("Topic Not Found");
           });
       });
+    });
+  });
+
+  describe("GET - /api/articles/:article_id (comment_count)", () => {
+    test("GET: 200 - should return the total amount of all comments for a specific article_id", () => {
+      return request(app)
+        .get("/api/articles/1")
+        .expect(200)
+        .then(({ body }) => {
+          const article = body.article;
+          expect(typeof article.comment_count).toBe("number");
+        });
     });
   });
 });
