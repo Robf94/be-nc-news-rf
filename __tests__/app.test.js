@@ -23,23 +23,17 @@ describe("app", () => {
       return request(app)
         .get("/api/topics")
         .expect(200)
-        .then((res) => {
-          res.body.topics.forEach((topic) => {
-            expect(topic).toHaveProperty("description");
-            expect(topic).toHaveProperty("slug");
+        .then(({ body }) => {
+          const topics = body.topics;
+
+          expect(topics).toHaveLength(3);
+
+          topics.forEach((topic) => {
+            expect(Object.keys(topic)).toEqual(["description", "slug"]);
 
             expect(typeof topic.description).toBe("string");
             expect(typeof topic.slug).toBe("string");
           });
-        });
-    });
-
-    test("GET: 200 - should respond with the correct length of the topic data", () => {
-      return request(app)
-        .get("/api/topics")
-        .expect(200)
-        .then((res) => {
-          expect(res.body.topics).toHaveLength(3);
         });
     });
   });
