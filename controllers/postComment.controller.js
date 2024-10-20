@@ -5,7 +5,7 @@ function postComment(req, res, next) {
 
   addCommentToDb(newComment)
     .then((comment) => {
-      res.status(201).send({ comment: comment });
+      res.status(201).send({ comment });
     })
     .catch((err) => {
       next(err);
