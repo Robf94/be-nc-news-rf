@@ -134,6 +134,8 @@ Responds with an array of user objects with the following properties:
 - name
 - avatar_url
 
+For more information on each endpoint, please refer to `endpoints.json`.
+
 ## Contribute
 
 ### Fork
