@@ -13,8 +13,8 @@ describe("app", () => {
     return request(app)
       .get("/")
       .expect(404)
-      .then((res) => {
-        expect(res.body.msg).toBe("Not Found");
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not Found");
       });
   });
 
@@ -73,8 +73,8 @@ describe("app", () => {
       return request(app)
         .get("/api/articles/999")
         .expect(404)
-        .then((res) => {
-          expect(res.body.msg).toBe("Not Found");
+        .then(({ body }) => {
+          expect(body.msg).toBe("Not Found");
         });
     });
 
@@ -82,8 +82,8 @@ describe("app", () => {
       return request(app)
         .get("/api/articles/not-a-number")
         .expect(400)
-        .then((res) => {
-          expect(res.body.msg).toBe("Bad Request");
+        .then(({ body }) => {
+          expect(body.msg).toBe("Bad Request");
         });
     });
   });
@@ -154,8 +154,8 @@ describe("app", () => {
       return request(app)
         .get("/api/articles/999")
         .expect(404)
-        .then((res) => {
-          expect(res.body.msg).toBe("Not Found");
+        .then(({ body }) => {
+          expect(body.msg).toBe("Not Found");
         });
     });
 
@@ -163,8 +163,8 @@ describe("app", () => {
       return request(app)
         .get("/api/articles/not-a-number")
         .expect(400)
-        .then((res) => {
-          expect(res.body.msg).toBe("Bad Request");
+        .then(({ body }) => {
+          expect(body.msg).toBe("Bad Request");
         });
     });
 
@@ -203,8 +203,8 @@ describe("app", () => {
         .post("/api/articles/1/comments")
         .send(newComment)
         .expect(400)
-        .then((res) => {
-          expect(res.body.msg).toBe("Body cannot be blank!");
+        .then(({ body }) => {
+          expect(body.msg).toBe("Body cannot be blank!");
         });
     });
   });
@@ -255,8 +255,8 @@ describe("app", () => {
         .patch("/api/articles/1")
         .send(updateArticle)
         .expect(400)
-        .then((res) => {
-          expect(res.body.msg).toBe("Bad Request");
+        .then(({body}) => {
+          expect(body.msg).toBe("Bad Request");
         });
     });
 
@@ -266,8 +266,8 @@ describe("app", () => {
         .patch("/api/articles/1")
         .send(updateArticle)
         .expect(400)
-        .then((res) => {
-          expect(res.body.msg).toBe("Body cannot be blank!");
+        .then(({body}) => {
+          expect(body.msg).toBe("Body cannot be blank!");
         });
     });
   });
@@ -281,16 +281,16 @@ describe("app", () => {
       return request(app)
         .delete("/api/comments/99999")
         .expect(404)
-        .then((response) => {
-          expect(response.body.msg).toBe("Comment does not exist");
+        .then(({body}) => {
+          expect(body.msg).toBe("Comment does not exist");
         });
     });
     test("DELETE: 400 - responds with an appropriate status when given an invalid id", () => {
       return request(app)
         .delete("/api/comments/not-a-comment")
         .expect(400)
-        .then((response) => {
-          expect(response.body.msg).toBe("Bad request");
+        .then(({body}) => {
+          expect(body.msg).toBe("Bad request");
         });
     });
   });
