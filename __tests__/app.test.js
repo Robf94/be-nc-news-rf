@@ -182,10 +182,10 @@ describe("app", () => {
         .expect(201)
         .then(({ body }) => {
           const comment = body.comment;
-          expect(typeof comment.comment_id).toBe("number");
-          expect(typeof comment.body).toBe("string");
+          expect(comment.comment_id).toBe(19);
+          expect(comment.body).toBe("I am a comment!");
           expect(comment.article_id).toBe(1);
-          expect(typeof comment.author).toBe("string");
+          expect(comment.author).toBe("icellusedkars");
           expect(comment.votes).toBe(0);
           expect(typeof comment.created_at).toBe("string");
         });
@@ -204,7 +204,35 @@ describe("app", () => {
         .send(newComment)
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).toBe("Body cannot be blank!");
+          expect(body.msg).toBe("Missing required fields");
+        });
+    });
+
+    test("POST: 400 - should return appropriate status when complete body is missing", () => {
+      const newComment = {};
+      return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.comment).toBe(undefined);
+          expect(body.msg).toBe("Missing required fields");
+        });
+    });
+
+    test("POST: 400 - should return error when article_id is invalid", () => {
+      const newComment = {
+        body: "This comment should not be added!",
+        author: "icellusedkars",
+        votes: 0,
+        created_at: new Date(),
+      };
+      return request(app)
+        .post("/api/articles/invlaid-article-id/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Invalid article_id");
         });
     });
   });
@@ -255,7 +283,7 @@ describe("app", () => {
         .patch("/api/articles/1")
         .send(updateArticle)
         .expect(400)
-        .then(({body}) => {
+        .then(({ body }) => {
           expect(body.msg).toBe("Bad Request");
         });
     });
@@ -266,7 +294,7 @@ describe("app", () => {
         .patch("/api/articles/1")
         .send(updateArticle)
         .expect(400)
-        .then(({body}) => {
+        .then(({ body }) => {
           expect(body.msg).toBe("Body cannot be blank!");
         });
     });
@@ -281,7 +309,7 @@ describe("app", () => {
       return request(app)
         .delete("/api/comments/99999")
         .expect(404)
-        .then(({body}) => {
+        .then(({ body }) => {
           expect(body.msg).toBe("Comment does not exist");
         });
     });
@@ -289,7 +317,7 @@ describe("app", () => {
       return request(app)
         .delete("/api/comments/not-a-comment")
         .expect(400)
-        .then(({body}) => {
+        .then(({ body }) => {
           expect(body.msg).toBe("Bad request");
         });
     });
