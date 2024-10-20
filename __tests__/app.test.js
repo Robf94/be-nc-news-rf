@@ -51,21 +51,21 @@ describe("app", () => {
   });
 
   describe("/api/articles/:article_id", () => {
-    test("GET: 200 - should return an article object with the relevant objects keys and value data types", () => {
+    test("GET: 200 - should return an article object with with article_id of 1, with the relevant objects keys and values", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
         .then(({ body }) => {
           const article = body.article;
-          expect(typeof article.article_id).toBe("number");
-          expect(typeof article.title).toBe("string");
-          expect(typeof article.topic).toBe("string");
-          expect(typeof article.author).toBe("string");
-          expect(typeof article.body).toBe("string");
-          expect(typeof article.created_at).toBe("string");
-          expect(typeof article.votes).toBe("number");
-          expect(typeof article.article_img_url).toBe("string");
-          expect(typeof article.comment_count).toBe("number");
+          expect(article.article_id).toBe(1);
+          expect(article.title).toBe("Living in the shadow of a great man");
+          expect(article.topic).toBe("mitch");
+          expect(article.author).toBe("butter_bridge");
+          expect(article.body).toBe("I find this existence challenging");
+          expect(article.created_at).toBe("2020-07-09T20:11:00.000Z");
+          expect(article.votes).toBe(100);
+          expect(article.article_img_url).toBe("https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700");
+          expect(article.comment_count).toBe(11);
         });
       // Note - .get(api/articles/1) sets the article to test against, as long as the article_id exists in the test data
     });
