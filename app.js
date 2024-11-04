@@ -3,6 +3,9 @@ const app = express();
 const controllers = require("./controllers/index.js");
 const routers = require("./routers/routerIndex.js");
 const { notFound, customError, badRequest, psqlColNotFound, notNullViolation, internalServerError } = require("./middleware/errorHandlers.js");
+const cors = require("cors");
+
+app.use(cors());
 
 app.use(express.json());
 
