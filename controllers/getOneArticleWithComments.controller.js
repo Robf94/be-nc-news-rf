@@ -4,7 +4,7 @@ function getOneArticleWithComments(req, res, next) {
   const { article_id } = req.params;
   fetchOneArticleWithComments(article_id)
     .then((comments) => {
-      res.status(200).send({ comments: comments });
+      res.status(200).send({ comments });
     })
     .catch((err) => {
       next(err);
