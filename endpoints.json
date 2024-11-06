@@ -68,7 +68,13 @@
     }
   },
   "PATCH /api/articles/:article_id": {
-    "description": "allows for partial updating of article by article_id to increment the vote counter",
+    "description": "allows for partial updating of article by article_id to increment or decrement the vote counter",
+    "exampleIncrementRequest": {
+      "inc_votes": 1
+    },
+    "exampleDecrementRequest": {
+      "inc_votes": -1
+    },
     "exampleResponse": {
       "article_id": 1,
       "title": "Living in the shadow of a great man",
