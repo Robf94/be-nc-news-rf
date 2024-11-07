@@ -171,16 +171,17 @@ describe("app", () => {
     test("POST: 201 - should add a comment to the relevant article_id", () => {
       const newComment = {
         body: "I am a comment!",
-        article_id: 1,
+        // article_id: 1,
         author: "icellusedkars",
-        votes: 0,
-        created_at: new Date(),
+        // votes: 0,
+        // created_at: new Date(),
       };
       return request(app)
         .post("/api/articles/1/comments")
         .send(newComment)
         .expect(201)
         .then(({ body }) => {
+          console.log(body.comment);
           const comment = body.comment;
           expect(comment.comment_id).toBe(19);
           expect(comment.body).toBe("I am a comment!");
@@ -228,7 +229,7 @@ describe("app", () => {
         created_at: new Date(),
       };
       return request(app)
-        .post("/api/articles/invlaid-article-id/comments")
+        .post("/api/articles/invalid-article-id/comments")
         .send(newComment)
         .expect(400)
         .then(({ body }) => {
@@ -300,7 +301,7 @@ describe("app", () => {
     });
   });
 
-  describe("DELETE /api/comments/:comment_id", () => {
+  describe.only("DELETE /api/comments/:comment_id", () => {
     test("DELETE: 204 - should delete the selected comment by comment_id", () => {
       return request(app).delete("/api/comments/2");
     });

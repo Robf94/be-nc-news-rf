@@ -8,7 +8,11 @@ function postComment(req, res, next) {
     return res.status(400).send({ msg: "Missing required fields" });
   }
 
-  if (isNaN(article_id)) {
+  // if (isNaN(article_id)) {
+  //   return res.status(400).send({ msg: "Invalid article_id" });
+  // }
+
+  if (!Number.isInteger(parseInt(article_id))) {
     return res.status(400).send({ msg: "Invalid article_id" });
   }
 
